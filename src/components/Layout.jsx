@@ -1,14 +1,20 @@
 import React from 'react'
-import { Link, Outlet } from 'react-router-dom'
+import {  Outlet } from 'react-router-dom'
+import { auth } from '../firebase.config';
 
 export default function Layout() {
+  
+  async function logOff(){
+    
+  }
+
   return (
     <div className='layout'>
-        <div className="header">
-            <h1>FeedUs</h1>
-            <Link to={"/feedback"}>Send Feedback</Link>
-        </div>
-        <Outlet/>
+      <div className="header">
+        <h1>FeedUs</h1>
+        <button onClick={()=>logOff()}>Sign Out</button>
+      </div>
+      <Outlet />
     </div>
   )
 }

@@ -6,14 +6,14 @@ import Signup from './Signup';
 import Profile from './Profile';
 import Feedback from './Feedback';
 import Login from './Login';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
 import { auth, db } from '../firebase.config';
 import { addDoc, collection } from 'firebase/firestore';
 import { useNavigate } from "react-router-dom"
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addUsers } from '../slices/userSlice';
 import Feedbackform from './Feedbackform';
+
 
 let users = [];
 export default function Main() {
@@ -35,7 +35,6 @@ export default function Main() {
                     email: email,
                     password: password
                 });
-                dispatch(addUsers(username));
                 navigate("/login", { replace: true });
             } catch (err) {
                 console.error(err);
@@ -43,6 +42,7 @@ export default function Main() {
             }
         }
     }
+
     async function loginWithEmailAndPassword(username, email, password) {
         try {
             await signInWithEmailAndPassword(auth, email, password, username);
@@ -55,6 +55,15 @@ export default function Main() {
             console.error(err);
             alert(err.message);
         }
+
+        await onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const uid = user.uid;
+                console.log("This is user" + user.email);
+            } else {
+                console.log("Logged Out")
+            }
+        });
     }
 
     return (
@@ -65,9 +74,8 @@ export default function Main() {
                     <Route path="/signup" element={<Signup signUp={signUpWithEmailAndPassword} />} />
                     <Route path="/login" element={<Login login={loginWithEmailAndPassword} />} />
                     <Route path="/profile" element={<Profile username={data.name} email={data.email} />} />
-                    <Route path="/feedback" element={<Feedback />}>
-                        <Route path="/feedback/feedbackform" element={<Feedbackform/>}/>
-                    </Route>
+                    <Route path="/feedback" element={<Feedback email={data.email} />} />
+                    <Route path="feedbackform/:id" element={<Feedbackform username={data.name} email={data.email} />} />
                 </Route>
             </Routes>
         </div>
