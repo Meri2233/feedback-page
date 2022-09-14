@@ -5,7 +5,7 @@ export default function Signup({ signUp }) {
 
     return (
         <div className='signup'>
-            <form onSubmit={(e) => {
+            <form onSubmit={(e) => { 
                 e.preventDefault();
                 console.log(e.target[2].value,e.target[3].value)
                 if (e.target[2].value === e.target[3].value) {

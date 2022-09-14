@@ -5,7 +5,7 @@ export default function Login({ login }) {
         <div className='login'>
             <form onSubmit={(e) => {
                 e.preventDefault();
-                let username = e.target[0].value;
+                let username = e.target[0].value; 
                 let email = e.target[1].value;
                 let password = e.target[2].value;
                 login(username, email, password);

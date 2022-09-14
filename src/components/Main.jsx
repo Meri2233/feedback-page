@@ -6,19 +6,17 @@ import Signup from './Signup';
 import Profile from './Profile';
 import Feedback from './Feedback';
 import Login from './Login';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { auth, db } from '../firebase.config';
 import { addDoc, collection } from 'firebase/firestore';
 import { useNavigate } from "react-router-dom"
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import Feedbackform from './Feedbackform';
 
 
 let users = [];
 export default function Main() {
     let navigate = useNavigate();
-    let dispatch = useDispatch();
     let [data, setData] = useState(
         {
             name: null,
@@ -54,11 +52,10 @@ export default function Main() {
         } catch (err) {
             console.error(err);
             alert(err.message);
-        }
+        } 
 
         await onAuthStateChanged(auth, (user) => {
             if (user) {
-                const uid = user.uid;
                 console.log("This is user" + user.email);
             } else {
                 console.log("Logged Out")

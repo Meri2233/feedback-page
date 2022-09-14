@@ -31,4 +31,4 @@ export default function Feedbackform() {
             </form>
         </div>
     )
-}
+} 

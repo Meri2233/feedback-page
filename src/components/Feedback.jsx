@@ -8,9 +8,7 @@ export default function Feedback(props) {
         <div className='profile'>
             <h1>Send Feedback to your friends</h1>
             {users.map((user) => {
-                if (user !== props.email) {
-                    return <Link to={`/feedbackform/:${user}`}><div className='user'>{user}</div></Link>
-                }
+                return <Link to={`/feedbackform/:${user}`}><div className='user'>{user}</div></Link>
             })}
         </div>
     )

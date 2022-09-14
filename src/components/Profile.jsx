@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from '../firebase.config';
 import { useSelector, useDispatch } from 'react-redux';
@@ -37,7 +37,7 @@ export default function Profile(props) {
             });
         }
         fetchData()
-    }, [users])
+    })
 
     return (
         <div className='profile'>
@@ -47,7 +47,7 @@ export default function Profile(props) {
                 <p>${props.email}</p>
 
             </div>
-            <div className="feedbacks">
+            <div className="feedbacks"> 
                 <h1>Feedbacks to you</h1>
                 {feedbacks.length === 0 ? <p>No Feedbacks</p> :
                     feedbacks.map(el => {
